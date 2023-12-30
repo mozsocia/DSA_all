@@ -1,3 +1,6 @@
+
+### single for loop
+```js
 function one(n) {
     function two(i) {
         if (i < n) {
@@ -24,9 +27,10 @@ function one1(n) {
 }
 
 one1(3);
+```
 
-
-/* output
+#### output
+```
 0
 1
 2
@@ -34,5 +38,40 @@ one1(3);
 0
 1
 2
+```
 
-*/
+### nested For loop
+
+```js
+function one(n) {
+    function two(i,j) {
+        if (i < n) {
+            if (j< n) {
+                console.log(i, j);
+
+                two(i, j+1)
+            } else {
+                two(i + 1,0);
+            }
+            
+        }
+    }
+    two(0,0);
+}
+
+one(3);
+```
+
+#### Output
+```
+0 0
+0 1
+0 2
+1 0
+1 1
+1 2
+2 0
+2 1
+2 2
+````
+
