@@ -22,7 +22,7 @@ function quickSortSimple(arr){
 }
 
 function quickSort(arr) {
-
+    // this algo animation -> https://www.youtube.com/watch?v=PgBzjlCcFvc
 
     function sort(arr) {
 
