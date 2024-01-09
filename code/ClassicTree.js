@@ -36,6 +36,24 @@ class BinaryTree {
       }
     }
   }
+
+    _addNode2(currentNode, newNode) {
+    // Recursive call to find a suitable place for the new node
+    if (this.customCheck(newNode.value)) {
+      if (!currentNode.left) {
+        currentNode.left = newNode;
+        return
+      }
+      this._addNode2(currentNode.left, newNode);
+    } else {
+      if (!currentNode.right) {
+        currentNode.right = newNode;
+        return
+      }
+      this._addNode2(currentNode.right, newNode);
+    }
+  }
+  
   printTree() {
     this._printTree(this.root, 0);
   }
