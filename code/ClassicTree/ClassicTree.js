@@ -88,14 +88,20 @@ class BinaryTree {
     return lastNode.value;
   }
 
-  hieght() {
-    return this._heightCount(this.root);
+  countNodes() {
+    return this._count(this.root);
   }
 
-  _heightCount(node) {
+  _count(node) {
     if (!node) return 0
-    return 1 + this._heightCount(node.left) + this._heightCount(node.right)
+    return 1 + this._count(node.left) + this._count(node.right)
   }
+
+  _height(node) {
+    if (!node) return 0;
+    return Math.max(this._height(node.left), this._height(node.right)) + 1;
+  }
+
 
 
   printTree() {
@@ -130,7 +136,7 @@ binaryTree.addNode(12);
 binaryTree.addNode(72);
 binaryTree.addNode(78);
 
-console.log(binaryTree.hieght())
+console.log(binaryTree.countNodes())
 
 binaryTree.printTree();
 
