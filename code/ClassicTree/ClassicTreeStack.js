@@ -49,7 +49,7 @@ class ClassicTree {
     let result = Math.sqrt(number);
 
     // Convert the result to a boolean (true/false)
-    //return Math.random() < 0.5
+    // return Math.random() < 0.5
     return result % 1 === 0;
   }
 
@@ -68,12 +68,12 @@ class ClassicTree {
 
 // Example usage:
 const binaryTree = new ClassicTree();
-binaryTree.addNode(2);
+binaryTree.addNode(12);
 binaryTree.addNode(3);
-binaryTree.addNode(5);
+binaryTree.addNode(15);
 binaryTree.addNode(4);
 binaryTree.addNode(1);
-binaryTree.addNode(6);
+binaryTree.addNode(16);
 binaryTree.addNode(7);
 
 

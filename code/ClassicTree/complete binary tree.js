@@ -12,6 +12,7 @@ class CompleteTree {
   constructor() {
     this.root = null
   }
+
   insertOne(value) {
     let newNode = new Node(value)
 
@@ -52,30 +53,21 @@ class CompleteTree {
 
     let queue = [this.root]
 
-    this.insertNode(newNode, queue)
+    while (queue.length > 0) {
+      let current = queue.shift()
+      if (!current.left) {
+        current.left = newNode
+        return true
+      }
+
+      if (!current.right) {
+        current.right = newNode
+        return true
+      }
+      queue.push(current.left, current.right)
+    }
   }
 
-  insertNode(newNode, queue) {
-    if (queue.length == 0) return
-
-    let current = queue.shift()
-
-    if (!current.left) {
-      current.left = newNode
-      return true
-    } else {
-      queue.push(current.left)
-    }
-
-    if (!current.right) {
-      current.right = newNode
-      return true
-    } else {
-      queue.push(current.right)
-    }
-    this.insertNode(newNode, queue)
-
-  }
 
 
   BreadFirstSearch() {
@@ -85,7 +77,7 @@ class CompleteTree {
     if (this.root) {
       queue.push(this.root);
 
-      while (queue.length) {
+      while (queue.length > 0) {
         const currentNode = queue.shift();
         result.push(currentNode.value);
 
@@ -101,17 +93,29 @@ class CompleteTree {
 
     return result;
   }
+
+  printTree() {
+    if (!this.root) return null
+    this._printTree(this.root, 0)
+  }
+  _printTree(node, lebel) {
+    if (node) {
+      this._printTree(node.right, lebel + 1)
+      console.log("  ".repeat(lebel) + node.value)
+      this._printTree(node.left, lebel + 1)
+    }
+  }
 }
 
 let one = new CompleteTree()
 
-one.insert(9)
-one.insert(4)
-one.insert(6)
-one.insert(2)
-one.insert(3)
-one.insert(7)
-one.insert(5)
+one.insertOne(9)
+one.insertOne(4)
+one.insertOne(6)
+one.insertOne(2)
+one.insertOne(3)
+one.insertOne(7)
+one.insertOne(5)
 
 /*
         9
@@ -119,6 +123,8 @@ one.insert(5)
   2   3    7   5
 
 */
+
+console.log(one.printTree())
 
 console.log(one.BreadFirstSearch())
 

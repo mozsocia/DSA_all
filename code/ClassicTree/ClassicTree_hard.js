@@ -13,47 +13,46 @@ class BinaryTree {
 
   addNode(value) {
     const newNode = new Node(value);
-
-    if (!this.root) {
-      this.root = newNode;
-    } else {
-      this._addNode(this.root, newNode);
-    }
+    this.root = this._addNode(this.root, newNode);
   }
 
   _addNode(currentNode, newNode) {
+    if (!currentNode) return newNode;
+
+    if (Math.random() < 0.5) {
+      currentNode.left = this._addNode(currentNode.left, newNode);
+    } else {
+      currentNode.right = this._addNode(currentNode.right, newNode);
+    }
+    return currentNode
+  }
+
+  _addNode2(currentNode, newNode) {
+    if (!currentNode) return newNode;
+
     if (!currentNode.left) {
       currentNode.left = newNode;
     } else if (!currentNode.right) {
       currentNode.right = newNode;
     } else {
-      // Recursive call to find a suitable place for the new node
-      if (Math.random() < 0.5) {
-        this._addNode(currentNode.left, newNode);
+      if (this.customCheck(newNode.value)) {
+        currentNode.left = this._addNode2(currentNode.left, newNode);
       } else {
-        this._addNode(currentNode.right, newNode);
-
+        currentNode.right = this._addNode2(currentNode.right, newNode);
       }
     }
+    return currentNode;
   }
 
-    _addNode2(currentNode, newNode) {
-    // Recursive call to find a suitable place for the new node
-    if (this.customCheck(newNode.value)) {
-      if (!currentNode.left) {
-        currentNode.left = newNode;
-        return
-      }
-      this._addNode2(currentNode.left, newNode);
-    } else {
-      if (!currentNode.right) {
-        currentNode.right = newNode;
-        return
-      }
-      this._addNode2(currentNode.right, newNode);
-    }
+  customCheck(number) {
+    // Apply any mathematical transformation you like
+    // For example, you can use the square root and check if it's an integer
+    let result = number * number;
+
+    // Convert the result to a boolean (true/false)
+    return result % 2 === 0 && result % 3 === 0;
   }
-  
+
   printTree() {
     this._printTree(this.root, 0);
   }
@@ -61,7 +60,7 @@ class BinaryTree {
   _printTree(node, level) {
     if (node) {
       this._printTree(node.right, level + 1);
-      console.log("  ".repeat(level) + node.value);
+      console.log("  ".repeat(level) + "-" + node.value);
       this._printTree(node.left, level + 1);
     }
   }
@@ -83,25 +82,6 @@ binaryTree.addNode(12);
 binaryTree.addNode(72);
 binaryTree.addNode(78);
 
-
-
 binaryTree.printTree();
-
-/*
-
-      12
-    8
-      9
-  3
-    5
-      10
-1
-      72
-    6
-      11
-  2
-    4
-      78
-*/
 
 // console.dir(binaryTree, { depth: null });
