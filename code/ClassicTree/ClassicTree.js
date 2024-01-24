@@ -17,7 +17,7 @@ class BinaryTree {
     if (!this.root) {
       this.root = newNode;
     } else {
-      this._addNode(this.root, newNode);
+      this._addNode4(this.root, newNode);
     }
   }
 
@@ -51,6 +51,48 @@ class BinaryTree {
         return
       }
       this._addNode2(currentNode.right, newNode);
+    }
+  }
+
+  _addNode3(node, newNode) {
+
+    const queue = [node];
+
+    while (queue.length > 0) {
+      const current = queue.shift();
+
+      if (!current.left) {
+        current.left = newNode;
+        newNode.parent = current
+        break;
+      }
+
+      if (!current.right) {
+        current.right = newNode;
+        newNode.parent = current
+        break;
+      }
+      queue.push(current.left, current.right);
+
+    }
+
+    return this;
+  }
+
+  _addNode4(node, newNode) {
+    if (!node.left) {
+      node.left = newNode
+      newNode.parent = node
+    } else if (!node.right) {
+      node.right = newNode
+      newNode.parent = node
+    } else {
+      let goLeft = this._count(node.left, 0) < this._count(node.right, 0)
+      if (goLeft) {
+        this._addNode4(node.left, newNode)
+      } else {
+        this._addNode4(node.right, newNode)
+      }
     }
   }
 
@@ -134,7 +176,12 @@ binaryTree.addNode(10);
 binaryTree.addNode(11);
 binaryTree.addNode(12);
 binaryTree.addNode(72);
-binaryTree.addNode(78);
+binaryTree.addNode(88);
+binaryTree.addNode(81);
+binaryTree.addNode(83);
+binaryTree.addNode(85);
+
+
 
 console.log(binaryTree.countNodes())
 

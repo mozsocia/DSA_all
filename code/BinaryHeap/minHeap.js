@@ -23,20 +23,27 @@ class BinaryHeap {
 
   }
   _insertNode(node, newNode) {
-    if (!node.left) {
-      node.left = newNode
-      newNode.parent = node
-    } else if (!node.right) {
-      node.right = newNode
-      newNode.parent = node
-    } else {
-      let goLeft = this._countNodes(node.left, 0) < this._countNodes(node.right, 0)
-      if (goLeft) {
-        this._insertNode(node.left, newNode)
-      } else {
-        this._insertNode(node.right, newNode)
+    const queue = [node];
+
+    while (queue.length > 0) {
+      const current = queue.shift();
+
+      if (!current.left) {
+        current.left = newNode;
+        newNode.parent = current
+        break;
       }
+
+      if (!current.right) {
+        current.right = newNode;
+        newNode.parent = current
+        break;
+      }
+      queue.push(current.left, current.right);
+
     }
+
+    return this;
   }
 
   _heapifyUp(node) {
@@ -50,13 +57,7 @@ class BinaryHeap {
     }
 
   }
-  count() {
-    return this._countNodes(this.root, 0)
-  }
-  _countNodes(node, count) {
-    if (!node) return 0
-    return 1 + this._countNodes(node.left, 0) + this._countNodes(node.right, 0)
-  }
+
   _findLastNode() {
     let queue = [this.root]
     let current = null
@@ -102,22 +103,19 @@ class BinaryHeap {
 
 
 
-
   printTree() {
-    const treeString = this._printTree(this.root, 0);
-    console.log(treeString);
+    console.log("-----------------")
+    this._printTree(this.root, 0);
+    console.log("-----------------")
+
   }
 
   _printTree(node, level) {
     if (node) {
-      const rightSubtree = this._printTree(node.right, level + 1);
-
-      let currentLine = "   ".repeat(level) + "-" + node.value + "\n";
-      const leftSubtree = this._printTree(node.left, level + 1);
-      return rightSubtree + currentLine + leftSubtree;
+      this._printTree(node.right, level + 1);
+      console.log("  ".repeat(level) + node.value);
+      this._printTree(node.left, level + 1);
     }
-
-    return "";
   }
 
 }
@@ -134,8 +132,10 @@ bstone.insert(12)
 bstone.insert(14)
 bstone.insert(17)
 bstone.insert(13)
+
+bstone.printTree()
+
+
 console.log(bstone.extractMin())
 
-console.log(bstone.count())
 bstone.printTree()
-console.log(bstone)
